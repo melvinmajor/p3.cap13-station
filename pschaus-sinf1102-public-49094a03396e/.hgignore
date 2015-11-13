@@ -1,0 +1,18 @@
+.classpath
+
+.settings/org.scala-ide.sdt.core.prefs
+.cache
+.cache-main
+.cache-tests
+
+oscar.eml
+.idea
+
+syntax: glob
+
+*/.project
+*.DS_Store
+
+**.class
+
+

@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=path\ append
+comment0.target=MySampleFileIO(java.lang.String,\ boolean)
+comment1.params=sample
+comment1.target=void\ writeSample(interfaces.Sample)
+comment2.params=from\ to
+comment2.target=java.util.List\ readSample(time.Instant,\ time.Instant)
+comment3.params=
+comment3.target=void\ close()
+comment4.params=string
+comment4.target=void\ setFile(java.lang.String)
+comment5.params=string
+comment5.target=void\ open(java.lang.String)
+comment6.params=
+comment6.target=java.util.List\ readSample()
+numComments=7

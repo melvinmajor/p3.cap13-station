@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.params=temp\ hum\ time\ isCelsius
+comment0.target=MySample(double,\ double,\ time.Instant,\ boolean)
+comment1.params=sample
+comment1.target=MySample(interfaces.Sample)
+comment10.params=str
+comment10.target=boolean\ isValidString(java.lang.String)
+comment2.params=
+comment2.target=time.Instant\ getTime()
+comment3.params=
+comment3.target=float\ getTemperature()
+comment4.params=
+comment4.target=float\ getHumidity()
+comment5.params=
+comment5.target=boolean\ isCelsius()
+comment6.params=temp
+comment6.target=void\ setTemp(float)
+comment7.params=hum
+comment7.target=void\ setHum(float)
+comment8.params=
+comment8.target=java.lang.String\ toString()
+comment9.params=str
+comment9.target=int\ getSuffix(java.lang.String)
+numComments=11
