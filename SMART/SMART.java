@@ -27,14 +27,22 @@ public class SMART
 		
 		System.out.println("Quel est le temps de rafraichissement en secondes ? (valeur minimum : 2)");
 		int refresh = saisieUtilisateur.nextInt();
-		assert refresh < 2 : "La valeur introduite doit etre egale ou superieure a 2 !";
-		System.out.println(refresh);
+		if (refresh < 2){
+			System.out.println("Erreur...");
+			System.out.println("Veuillez introduire une valeur egale ou superieure a 2.");
+			int refresh = saisieUtilisateur.nextInt();
+		}
+		System.out.println("Le temps de rafraichissement est de " + refresh + "secondes");
 		
 		
 		System.out.println("Souhaitez-vous ecraser les precedentes donnees ? (true or false)");
 		boolean erase = saisieUtilisateur.nextBoolean();
-		assert erase != true || erase != false : "Veuillez indiquer 'true' ou 'false'" ;
-		System.out.println(erase);
+		if (erase != true || erase != false){
+			System.out.println("Erreur...");
+			System.out.println("Veuillez introduire 'true' ou 'false' s'il vous plait...");
+			boolean erase = saisieUtilisateur.nextBoolean();
+		}
+		System.out.println("Vous avez indiqué : " + erase);
 
 		saisieUtilisateur.close();
 		
@@ -44,9 +52,9 @@ public class SMART
 
 
 /**
- * Mï¿½thode ayant pour but de rï¿½cuperer les donnï¿½es du capteur & de les inscrire dans un fichier texte.
+ * Methode ayant pour but de recuperer les donnees du capteur & de les inscrire dans un fichier texte.
  * 
- * @pre : Ecrasement des donnï¿½es (TRUE OR FALSE) : Variable Booleen Erase.
+ * @pre : Ecrasement des donnees (TRUE OR FALSE) : Variable Booleen Erase.
  * @pre : Intervalle de temps entre deux mesures (INT) : Variable int Interval.
  * 
  * @author Gauthier Fossion, Melvin Campos Casares, Pablo Wauthelet, Crispin Mutani.
@@ -75,7 +83,7 @@ public class SMART
 				{
 					try 
 					{
-						System.out.println("Mesure : "+ sample.getTemperature() + "ï¿½C / " + sample.getHumidity());
+						System.out.println("Mesure : "+ sample.getTemperature() + "C / " + sample.getHumidity());
 					}
 					catch (Exception ex) 
 					{
@@ -91,9 +99,9 @@ public class SMART
 
 
 	/**
-	* Mï¿½thode ayant pour de connecter votre station avec vos tï¿½lï¿½phones via pushbullet.
+	* Mï¿½thode ayant pour de connecter votre station avec vos telephones via pushbullet.
 	* 
-	* @pre : Clï¿½ PushBullet (STRING )
+	* @pre : ClePushBullet (STRING)
 	* 
 	* @author Gauthier Fossion, Melvin Campos Casares, Pablo Wauthelet, Crispin Mutani.
 	* 
@@ -129,6 +137,17 @@ public class SMART
                         System.err.println(ex);
                         System.exit(-1);
                     }
+                }
+                if (body.contains("deg") || body.contains("humid")){
+                	Stry 
+					{
+						System.out.println("Mesure : "+ sample.getTemperature() + "C / " + sample.getHumidity());
+					}
+					catch (Exception ex) 
+					{
+						System.err.println(ex);
+						System.exit(-1);
+					}
                 }
             }
         });
