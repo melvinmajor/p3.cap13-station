@@ -14,13 +14,13 @@ AUTEURS : Melvin Campos Casares ; Gauthier Fossion ; Crispin Mutani ;
                             BUT DU PROJET
 ------------------------------------------------------------------------
 Création d'un programme Java visant ŕ réaliser une station météo avancée
-sur un Raspberry Pi 2 modčle B, ŕ la demande de la société ThermoPi
+sur un Raspberry Pi 2 modele B, a la demande de la société ThermoPi
 représenté par Pierre SCHAUS, professeur de l'Université Catholique de
 Louvain (UCL).
 
 Ce projet porte sur l'élaboration d'une station météo autonome sur un
-Raspberry Pi 2 modčle B. Cette station, une fois connecté ŕ internet,
-permet de mesurer la température ainsi que l'humidité ŕ distance sur une
+Raspberry Pi 2 modele B. Cette station, une fois connecté a internet,
+permet de mesurer la température ainsi que l'humidité a distance sur une
 plateforme simple d'utilisation pour le client.
 
 ------------------------------------------------------------------------
