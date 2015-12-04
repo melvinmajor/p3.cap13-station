@@ -37,9 +37,15 @@ public class SMART
 	public static double humMax;
 	public static double humMin;
 	public static String bulletKey;
+	public static double tempMoy;
+	public static double maxTemp;
+	public static double minTemp = 0;
+	public static double humMoy;
+	public static double maxHum;
+	public static double minHum = 0;
 	
 	/**
-	* MÃ©thode permettant de demander les informations Ã  l'utilisateur & lancement pushbullet, alerte, mesure
+	* Méthode permettant de demander les informations à l'utilisateur & lancement pushbullet, alerte, mesure
 	* 
 	* @pre : None
 	* 
@@ -64,25 +70,25 @@ public class SMART
 		
 		
 		System.out.println();
-		System.out.println("Quel est le seuil maximum de tÂ° sans avertissement ? (max 80)");
+		System.out.println("Quel est le seuil maximum de t° sans avertissement ? (max 80)");
 		tempMax = saisieUtilisateur.nextDouble();
 		while (tempMax >= 80 && tempMax <= -40){
 			System.out.println("Erreur...");
-			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 Â°C.");
+			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 °C.");
 			tempMax = saisieUtilisateur.nextDouble();
 		}
 		
-		System.out.println("Vous serez averti si la temperature dÃ©passe "+tempMax+" Â°C");
+		System.out.println("Vous serez averti si la temperature dépasse "+tempMax+" °C");
 		
 		System.out.println();
-		System.out.println("Quel est le seuil minimum de tÂ° sans avertissement ? (max -40)");
+		System.out.println("Quel est le seuil minimum de t° sans avertissement ? (max -40)");
 		tempMin = saisieUtilisateur.nextDouble();
 		while (tempMin >= 80 && tempMin <= -40){
 			System.out.println("Erreur...");
-			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 Â°C.");
+			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 °C.");
 			tempMin = saisieUtilisateur.nextDouble();
 		}
-		System.out.println("Vous serez averti si la temperature descend en dessous de "+tempMin+" Â°C");
+		System.out.println("Vous serez averti si la temperature descend en dessous de "+tempMin+" °C");
 		
 		System.out.println();
 		System.out.println("Quel est le seuil maximum d'humidite sans avertissement ? (max 100)");
@@ -93,7 +99,7 @@ public class SMART
 			humMax = saisieUtilisateur.nextDouble();
 		}
 		
-		System.out.println("Vous serez averti si l'humidite dÃ©passe "+humMax+" %");
+		System.out.println("Vous serez averti si l'humidite dépasse "+humMax+" %");
 		
 		System.out.println();
 		System.out.println("Quel est le seuil minimum d'humidite sans avertissement ? (max 0)");
@@ -128,7 +134,7 @@ public class SMART
 			erase = true;
 		}
 		
-		System.out.println("Vous avez indiquÃ© : " + eraseChoice);
+		System.out.println("Vous avez indiqué : " + eraseChoice);
 
 		saisieUtilisateur.close();
 		
@@ -140,10 +146,10 @@ public class SMART
 	}
 
 	/**
-	* MÃ©thode ayant pour but de rÃ©cuperer les donnÃ©es du capteur & de les inscrire dans un fichier texte.
+	* Méthode ayant pour but de récuperer les données du capteur & de les inscrire dans un fichier texte.
 
  * 
- * @pre : Ecrasement des donnÃ©es (TRUE OR FALSE) : Variable Booleen Erase.
+ * @pre : Ecrasement des données (TRUE OR FALSE) : Variable Booleen Erase.
  * @pre : Intervalle de temps entre deux mesures (INT) : Variable int Interval.
  * 
  * @author Gauthier Fossion, Melvin Campos Casares, Pablo Wauthelet, Crispin Mutani.
@@ -173,10 +179,54 @@ public class SMART
 				{
 					try 
 					{
-						System.out.println("Mesure : "+ sample.getTemperature() + "Â°C / " + sample.getHumidity());
+						System.out.println("Mesure : "+ sample.getTemperature() + "°C / " + sample.getHumidity());
 						temp = sample.getTemperature();
 						hum = sample.getHumidity();
-						System.out.println(temp);
+						
+						if(tempMoy == 0)
+						{
+							tempMoy = temp;
+							humMoy = hum;
+						}
+						else
+						{
+						tempMoy = (tempMoy + temp)/2;
+						humMoy = (humMoy + hum)/2;
+						}
+						
+						if(maxTemp < temp)
+						{
+							maxTemp = temp;
+						}
+						
+						if(minTemp != 0)
+						{
+							if(minTemp > temp)
+							{
+							minTemp = temp;
+							}
+						}
+						else
+						{
+							minTemp = temp;
+						}
+						
+						if(maxHum < hum)
+						{
+							maxHum = hum;
+						}
+						
+						if(minHum != 0)
+						{
+							if(minHum > hum)
+							{
+								minHum = hum;
+							}
+						}
+						else
+						{
+							minHum = hum;
+						}
 						
 					}	
 					catch (Exception ex) 
@@ -192,9 +242,9 @@ public class SMART
 	}
 
 	/**
-	* MÃ©thode ayant pour de connecter votre station avec vos tÃ©lÃ©phones via pushbullet.
+	* Méthode ayant pour de connecter votre station avec vos téléphones via pushbullet.
 	* 
-	* @pre : ClÃ© PushBullet (STRING )
+	* @pre : Clé PushBullet (STRING )
 	* 
 	* @author Gauthier Fossion, Melvin Campos Casares, Pablo Wauthelet, Crispin Mutani.
 	* 
@@ -228,7 +278,12 @@ public class SMART
                         client.pushNote("GraphHumWeek", "Graphique de l'humidite de la semaine");
                         client.pushNote("GraphTempWeek", "Graphique de la temperature de la semaine");
                         client.pushNote("PredTemp", "Temperature dans une heure");
-                        
+                        client.pushNote("MoyTemp", "Moyenne des temperatures");
+                        client.pushNote("MoyHum", "Moyenne de l'humidite");
+                        client.pushNote("MaxTemp", "Temperature maximale atteinte");
+                        client.pushNote("MinTemp", "Temperature minimale atteinte");
+                        client.pushNote("MaxHum", "Taux d'humidite maximal atteinte");
+                        client.pushNote("MinHum", "Taux d'humidite minimal atteinte");
                         
                         // notez que client.pushFile permet d'envoyer des fichiers
                         // par exemple client.pushFile("dayGraph.png", null);
@@ -446,6 +501,144 @@ public class SMART
 					}
                 }
                 
+                if (body.contains("MoyTemp")) 
+                {
+                    try 
+                    {   
+                    	               	
+                    	double fah = ((9/5)*tempMoy+32);
+                    	
+                    	String str = String.valueOf(tempMoy)+" Celsius & "+String.valueOf(fah)+" Fahrenheit";
+                    	
+                    	// ... alors on repond avec une reponse simple ;-)
+                        client.pushNote("Reponse :", str);
+                        // notez que client.pushFile permet d'envoyer des fichiers
+                        // par exemple client.pushFile("dayGraph.png", null);
+                    } 
+
+                    catch (IOException ex) 
+                    {
+                        System.err.println(ex);
+                        System.exit(-1);
+                    } catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                
+                if (body.contains("MoyHum")) 
+                {
+                    try 
+                    {   
+                    	               	
+                    	String str = String.valueOf(humMoy)+"%";
+                    	
+                    	// ... alors on repond avec une reponse simple ;-)
+                        client.pushNote("Reponse :", str);
+                        // notez que client.pushFile permet d'envoyer des fichiers
+                        // par exemple client.pushFile("dayGraph.png", null);
+                    } 
+
+                    catch (IOException ex) 
+                    {
+                        System.err.println(ex);
+                        System.exit(-1);
+                    } catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                
+                if (body.contains("MaxTemp")) 
+                {
+                    try 
+                    {   
+                    	               	
+                    	double fah = ((9/5)*maxTemp+32);
+                    	
+                    	String str = String.valueOf(maxTemp)+" Celsius & "+String.valueOf(fah)+" Fahrenheit";
+                    	
+                    	// ... alors on repond avec une reponse simple ;-)
+                        client.pushNote("Reponse :", str);
+                        // notez que client.pushFile permet d'envoyer des fichiers
+                        // par exemple client.pushFile("dayGraph.png", null);
+                    } 
+
+                    catch (IOException ex) 
+                    {
+                        System.err.println(ex);
+                        System.exit(-1);
+                    } catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                
+                if (body.contains("MinTemp")) 
+                {
+                    try 
+                    {   
+                    	               	
+                    	double fah = ((9/5)*minTemp+32);
+                    	
+                    	String str = String.valueOf(minTemp)+" Celsius & "+String.valueOf(fah)+" Fahrenheit";
+                    	
+                    	// ... alors on repond avec une reponse simple ;-)
+                        client.pushNote("Reponse :", str);
+                        // notez que client.pushFile permet d'envoyer des fichiers
+                        // par exemple client.pushFile("dayGraph.png", null);
+                    } 
+
+                    catch (IOException ex) 
+                    {
+                        System.err.println(ex);
+                        System.exit(-1);
+                    } catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                
+                if (body.contains("MaxHum")) 
+                {
+                    try 
+                    {   
+                    	               	
+                    	String str = String.valueOf(maxHum)+"%";
+                    	
+                    	// ... alors on repond avec une reponse simple ;-)
+                        client.pushNote("Reponse :", str);
+                        // notez que client.pushFile permet d'envoyer des fichiers
+                        // par exemple client.pushFile("dayGraph.png", null);
+                    } 
+
+                    catch (IOException ex) 
+                    {
+                        System.err.println(ex);
+                        System.exit(-1);
+                    } catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                
+                if (body.contains("MinHum")) 
+                {
+                    try 
+                    {   
+                    	               	
+                    	String str = String.valueOf(minHum)+"%";
+                    	
+                    	// ... alors on repond avec une reponse simple ;-)
+                        client.pushNote("Reponse :", str);
+                        // notez que client.pushFile permet d'envoyer des fichiers
+                        // par exemple client.pushFile("dayGraph.png", null);
+                    } 
+
+                    catch (IOException ex) 
+                    {
+                        System.err.println(ex);
+                        System.exit(-1);
+                    } catch (Exception e) {
+						e.printStackTrace();
+					}
+                }
+                
                
                
             }
@@ -454,7 +647,7 @@ public class SMART
     }
 
 	/**
-	* MÃ©thode permettant de fournir un graphique de l'humiditÃ© selon les heures.
+	* Méthode permettant de fournir un graphique de l'humidité selon les heures.
 	* 
 	* @pre : None
 	* 
@@ -488,7 +681,7 @@ public class SMART
     }
     
 	/**
-	* MÃ©thode permettant de fournir un graphique de la temperature selon les heures.
+	* Méthode permettant de fournir un graphique de la temperature selon les heures.
 	* 
 	* @pre : None
 	* 
@@ -522,7 +715,7 @@ public class SMART
     }
     
     /**
-	* MÃ©thode permettant de fournir un graphique de l'humiditÃ© selon les jours.
+	* Méthode permettant de fournir un graphique de l'humidité selon les jours.
 	* 
 	* @pre : None
 	* 
@@ -556,7 +749,7 @@ public class SMART
     }
     
     /**
-   	* MÃ©thode permettant de fournir un graphique de la temperature selon les jours.
+   	* Méthode permettant de fournir un graphique de la temperature selon les jours.
    	* 
    	* @pre : None
    	* 
@@ -590,7 +783,7 @@ public class SMART
     }
     
     /**
-   	* MÃ©thode permettant de fournir un graphique de l'humiditÃ© selon les semaines.
+   	* Méthode permettant de fournir un graphique de l'humidité selon les semaines.
    	* 
    	* @pre : None
    	* 
@@ -624,7 +817,7 @@ public class SMART
     }
     
     /**
-   	* MÃ©thode permettant de fournir un graphique de la temperature selon les semaines.
+   	* Méthode permettant de fournir un graphique de la temperature selon les semaines.
    	* 
    	* @pre : None
    	* 
@@ -658,7 +851,7 @@ public class SMART
     }
 
     /**
-   	* MÃ©thode permettant de predire la temperature pour l'heure Ã  venir.
+   	* Méthode permettant de predire la temperature pour l'heure à venir.
    	* 
    	* @pre : None
    	* 
@@ -697,7 +890,7 @@ public class SMART
     }
 
     /**
-   	* MÃ©thode permettant de fournir des alertes en cas d'atteinte des plafons dÃ©finis
+   	* Méthode permettant de fournir des alertes en cas d'atteinte des plafons définis
    	* 
    	* @pre : None
    	* 
