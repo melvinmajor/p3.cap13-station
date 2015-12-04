@@ -1,0 +1,116 @@
+\documentclass[10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+
+\title{SMART : Station météorologique autonome reliée en temps réel.}
+\author{Gauthier Fossion \and Melvin Campos Casares \and Crispin Mutani \and Pablo Wauthelet}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section{Contexte}
+
+This project involves the development of an autonomous and intelligent weather station on a Raspberry Pi Model B+. The station, once connected to the internet, has the possibility to measure the temperature (in degrees and in Fahrenheit) but also the humidity thanks to a simple platform which is easy to use for the customer.
+The company ThermoPi believes in the idea of a smart-connected thermometer on the market and is looking for new markets and new applications for its product. It’s in this context that the design proposed in this work is open enough to be freely adapted to other wider uses.
+
+\tableofcontents
+
+\section{Cahier Des Charges}
+
+\subsection{Fonctionnalités}
+\begin{itemize}
+\item La station doit pouvoir prélever la température et l’humidité à intervalle régulier.
+\item L’opérateur devrait pouvoir juger facilement depuis son smartphone ou ordinateur la température et l’humidité du magasin à étiquette, de la colle ainsi que du hall de soutirage.
+\item Possibilité de sauvegarde des mesures et de les recharger par après pour une meilleure traçabilité en cas de problème pour les produits du client.
+\item Possibilité de générer des graphes retraçant l’évolution des mesures.
+\item Design avec interface utilisateur basique (type interface « console ») et connexion par SSH.
+\item Indicateurs statistiques sur les données collectées affichées par la station.
+\item Estimations disponibles les plus précises possible sur les conditions météo à court terme.
+\item Alarme avertissant lorsqu’un seuil critique prédéfini (inférieur ou supérieur) est atteint ou dépassé.
+\end{itemize}
+
+\subsection{Performances}
+\begin{itemize}
+\item Alarme avertissant lorsqu’une température prédéfinie est atteinte ou dépassée.
+\item Définition par l’utilisateur des plafonds minimum et maximum.
+\end{itemize}
+
+\subsection{Contraintes}
+\begin{itemize}
+\item La station doit pouvoir être implémentée sur un Raspberry Pi et le matériel, d’une valeur totale de 150 euros, doit être le suivant :
+\begin{itemize}
+\item 1 Raspberry Pi 2 modèle B+ avec son boitier
+\item 1 alimentation micro-USB 2A
+\item 1 carte SD (16 GB)
+\item 1 sonde DHT22-AM2302
+\item 1 câble RJ-45
+\item 1 boite de rangement
+\end{itemize}
+\item Elle doit pouvoir fonctionner en permanence 24 h/24, 7 j/7.
+\item L’utilisation d’une librairie JAVA (.jar) fournie par un étudiant stagiaire chez ThermoPi, Maxime Piraux, permettant l’interaction avec la sonde et la communication à distance via Pushbullet.
+\end{itemize}
+
+\subsection{Echéances}
+\begin{itemize}
+\item 13/11/2015 : Distribution du Raspberry ainsi que du matériel nécessaire pour la réalisation du projet et remise du cahier des charges.
+\item 17/11/2015 – 20/11/2015 : Prestation orale sur un sujet attribué précédemment.
+\item 23/11/2015 : Exposé sous format PDF ainsi que du planning.
+\item 04/12/2015 : Rapport sous format PDF ainsi que du programme en JAVA.
+\item 08/12/2015 : Présentation orale du projet (face aux jurys UCL).
+\item 16/12/2015 : Soirée de présentation des 4 meilleurs projets, devant public et jury constitué notamment de professionnels et de professeurs externes.
+\end{itemize}
+
+\section{Planning}
+\subsection{}
+\includegraphics[scale=0.65]{../../../Planning.png} 
+
+\section{Guide Utilisateur}
+\subsection{Inscription sur PushBullet}
+Rendez-vous sur le lien suivant : https://www.pushbullet.com/ \\
+Inscrivez-vous à l'aide de votre compte facebook ou google. \\
+Allez dans les paramètres de votre compte : \\
+\includegraphics[scale=0.65]{../../../Cle.png} \\
+Une fois dans MyAccount, copier votre "access token". \\
+Elle devrait ressembler à ceci : geZGHsKcEPfoMS0qhNDx08lTyHPP9NIU. \\
+Copier ensuite cette clé dans votre presse-papier. 
+
+\subsection{Démarrage du programme}
+Envoyez le fichier SMART.jar sur le raspberry via FTP ou SCP. \\
+Connectez-vous à votre raspberry PI en SSH. \\
+Assurez-vous d'avoir bien installer Java. \\
+Lancez ensuite le programme avec la commande suivante : sudo java -jar SMART.jar \\
+Le programme démarre.
+
+\subsection{Assistant de démarrage}
+Répondez ensuite au question de l'assistant de démarrage. \\
+\includegraphics[scale=0.65]{../../../Assistant.png} 
+
+\subsection{Utilisation de PushBullet}
+\subsubsection{Commandes}
+\begin{itemize}
+\item ? : Renvoi une liste de toutes les commandes disponibles.
+\item TempNow : Renvoi la température à l'instant présent.
+\item HumNow : Renvoi le taux d'humidité à l'instant présent.
+\item GraphHumHour : Renvoi un graphique du taux d'humidité sur la dernière heure.
+\item GraphTempHour : Renvoi un graphique de la température sur la dernière heure.
+\item GraphHumDay : Renvoi un graphique du taux d'humidité sur les 24 dernières heures.
+\item GraphTempDay : Renvoi un graphique de la température sur les 24 dernières heures.
+\item GraphHumWeek : Renvoi un graphique du taux d'humidité sur les 7 derniers jours.
+\item GraphTempWeek : Renvoi un graphique de la température sur les 7 derniers jours
+\item PredTemp : Prédit la température qu'il devrait faire dans 1 heure.
+\item MoyTemp : Renvoi la moyenne des températures.
+\item MoyHum : Renvoi la moyenne du taux d'humidité.
+\item MaxTemp : Renvoi la température maximale mesurée.
+\item MinTemp : Renvoi la plus basse température mesurée.
+\item MaxHum : Renvoi le taux d'humidité maximum mesuré.
+\item MinHum : Renvoi le plus faible taux d'humidité mesuré.
+\end{itemize}
+
+
+\end{document} 
