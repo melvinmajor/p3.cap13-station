@@ -31,4 +31,8 @@ fonctionnalités et contraintes demandées par le client, AB Inbev, ainsi
 que des performances complémentaires, des délivrables et des échéances
 misent en place.
 
+Notre programme est écrit via eclipse mais un package BlueJ est
+disponible pour ceux préférant BlueJ même si nous vous conseillons
+vivement d'utiliser eclipse qui est bien plus fonctionnel.
+
 Le reste est a suivre...
