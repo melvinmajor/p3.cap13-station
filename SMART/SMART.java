@@ -1,3 +1,14 @@
+/**
+ * Ce projet porte sur lâ€™Ã©laboration dâ€™une station mÃ©tÃ©o autonome sur un Raspberry Pi modÃ¨le B+.
+ * Cette station, une fois connectÃ©e Ã  internet, permet de mesurer la tempÃ©rature ainsi que lâ€™humiditÃ© sur une plateforme simple dâ€™utilisation pour le client.
+ * Le lancement du programme se rÃ©alise sur la Raspberry via une connexion SSH.
+ * Une clÃ© PushBullet doit Ãªtre fournie Ã  son dÃ©marrage afin de pouvoir intÃ©ragir avec elle par aprÃ¨s via le site internet et l'application PushBullet.
+ * Pour plus d'information sur PushBullet, veuillez visiter le site internet : http://www.pushbullet.com/
+ * 
+ * @author : Melvin Campos Casares & Gauthier Fossion & Crispin Mutani & Pablo Wauthelet
+ * @version : v1.0 (last update : 4th december 2015)
+ */
+
 import java.util.Scanner;
 
 import chart.Chart;
@@ -45,7 +56,7 @@ public class SMART
 	public static double minHum = 0;
 	
 	/**
-	* Méthode permettant de demander les informations à l'utilisateur & lancement pushbullet, alerte, mesure
+	* Mï¿½thode permettant de demander les informations ï¿½ l'utilisateur & lancement pushbullet, alerte, mesure
 	* 
 	* @pre : None
 	* 
@@ -70,25 +81,25 @@ public class SMART
 		
 		
 		System.out.println();
-		System.out.println("Quel est le seuil maximum de t° sans avertissement ? (max 80)");
+		System.out.println("Quel est le seuil maximum de tï¿½ sans avertissement ? (max 80)");
 		tempMax = saisieUtilisateur.nextDouble();
 		while (tempMax >= 80 && tempMax <= -40){
 			System.out.println("Erreur...");
-			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 °C.");
+			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 ï¿½C.");
 			tempMax = saisieUtilisateur.nextDouble();
 		}
 		
-		System.out.println("Vous serez averti si la temperature dépasse "+tempMax+" °C");
+		System.out.println("Vous serez averti si la temperature dï¿½passe "+tempMax+" ï¿½C");
 		
 		System.out.println();
-		System.out.println("Quel est le seuil minimum de t° sans avertissement ? (max -40)");
+		System.out.println("Quel est le seuil minimum de tï¿½ sans avertissement ? (max -40)");
 		tempMin = saisieUtilisateur.nextDouble();
 		while (tempMin >= 80 && tempMin <= -40){
 			System.out.println("Erreur...");
-			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 °C.");
+			System.out.println("Veuillez introduire une valeur comprise en -40 & 80 ï¿½C.");
 			tempMin = saisieUtilisateur.nextDouble();
 		}
-		System.out.println("Vous serez averti si la temperature descend en dessous de "+tempMin+" °C");
+		System.out.println("Vous serez averti si la temperature descend en dessous de "+tempMin+" ï¿½C");
 		
 		System.out.println();
 		System.out.println("Quel est le seuil maximum d'humidite sans avertissement ? (max 100)");
@@ -99,7 +110,7 @@ public class SMART
 			humMax = saisieUtilisateur.nextDouble();
 		}
 		
-		System.out.println("Vous serez averti si l'humidite dépasse "+humMax+" %");
+		System.out.println("Vous serez averti si l'humidite dï¿½passe "+humMax+" %");
 		
 		System.out.println();
 		System.out.println("Quel est le seuil minimum d'humidite sans avertissement ? (max 0)");
@@ -134,7 +145,7 @@ public class SMART
 			erase = true;
 		}
 		
-		System.out.println("Vous avez indiqué : " + eraseChoice);
+		System.out.println("Vous avez indiquï¿½ : " + eraseChoice);
 
 		saisieUtilisateur.close();
 		
@@ -146,10 +157,10 @@ public class SMART
 	}
 
 	/**
-	* Méthode ayant pour but de récuperer les données du capteur & de les inscrire dans un fichier texte.
+	* Mï¿½thode ayant pour but de rï¿½cuperer les donnï¿½es du capteur & de les inscrire dans un fichier texte.
 
  * 
- * @pre : Ecrasement des données (TRUE OR FALSE) : Variable Booleen Erase.
+ * @pre : Ecrasement des donnï¿½es (TRUE OR FALSE) : Variable Booleen Erase.
  * @pre : Intervalle de temps entre deux mesures (INT) : Variable int Interval.
  * 
  * @author Gauthier Fossion, Melvin Campos Casares, Pablo Wauthelet, Crispin Mutani.
@@ -179,7 +190,7 @@ public class SMART
 				{
 					try 
 					{
-						System.out.println("Mesure : "+ sample.getTemperature() + "°C / " + sample.getHumidity());
+						System.out.println("Mesure : "+ sample.getTemperature() + "ï¿½C / " + sample.getHumidity());
 						temp = sample.getTemperature();
 						hum = sample.getHumidity();
 						
@@ -242,9 +253,9 @@ public class SMART
 	}
 
 	/**
-	* Méthode ayant pour de connecter votre station avec vos téléphones via pushbullet.
+	* Mï¿½thode ayant pour de connecter votre station avec vos tï¿½lï¿½phones via pushbullet.
 	* 
-	* @pre : Clé PushBullet (STRING )
+	* @pre : Clï¿½ PushBullet (STRING )
 	* 
 	* @author Gauthier Fossion, Melvin Campos Casares, Pablo Wauthelet, Crispin Mutani.
 	* 
@@ -639,15 +650,28 @@ public class SMART
 					}
                 }
                 
-               
-               
+                if (body.contains("hello")) {
+                    client.pushNote("hello world");
+                }
+                
+                if (body.contains("test")) {
+                    client.pushNote("Cette fonction est desactivee, desole pour vous.");
+                }
+                
+                if (body.contains("emoticon")) {
+                    client.pushNote(";-)");
+                }
+                
+                if (body.contains("nooo")) {
+                    client.pushNote("http://www.nooooooooooooooo.com/");
+                }
             }
         });
 
     }
 
 	/**
-	* Méthode permettant de fournir un graphique de l'humidité selon les heures.
+	* Mï¿½thode permettant de fournir un graphique de l'humiditï¿½ selon les heures.
 	* 
 	* @pre : None
 	* 
@@ -681,7 +705,7 @@ public class SMART
     }
     
 	/**
-	* Méthode permettant de fournir un graphique de la temperature selon les heures.
+	* Mï¿½thode permettant de fournir un graphique de la temperature selon les heures.
 	* 
 	* @pre : None
 	* 
@@ -715,7 +739,7 @@ public class SMART
     }
     
     /**
-	* Méthode permettant de fournir un graphique de l'humidité selon les jours.
+	* Mï¿½thode permettant de fournir un graphique de l'humiditï¿½ selon les jours.
 	* 
 	* @pre : None
 	* 
@@ -749,7 +773,7 @@ public class SMART
     }
     
     /**
-   	* Méthode permettant de fournir un graphique de la temperature selon les jours.
+   	* Mï¿½thode permettant de fournir un graphique de la temperature selon les jours.
    	* 
    	* @pre : None
    	* 
@@ -783,7 +807,7 @@ public class SMART
     }
     
     /**
-   	* Méthode permettant de fournir un graphique de l'humidité selon les semaines.
+   	* Mï¿½thode permettant de fournir un graphique de l'humiditï¿½ selon les semaines.
    	* 
    	* @pre : None
    	* 
@@ -817,7 +841,7 @@ public class SMART
     }
     
     /**
-   	* Méthode permettant de fournir un graphique de la temperature selon les semaines.
+   	* Mï¿½thode permettant de fournir un graphique de la temperature selon les semaines.
    	* 
    	* @pre : None
    	* 
@@ -851,7 +875,7 @@ public class SMART
     }
 
     /**
-   	* Méthode permettant de predire la temperature pour l'heure à venir.
+   	* Mï¿½thode permettant de predire la temperature pour l'heure ï¿½ venir.
    	* 
    	* @pre : None
    	* 
@@ -890,7 +914,7 @@ public class SMART
     }
 
     /**
-   	* Méthode permettant de fournir des alertes en cas d'atteinte des plafons définis
+   	* Mï¿½thode permettant de fournir des alertes en cas d'atteinte des plafons dï¿½finis
    	* 
    	* @pre : None
    	* 
