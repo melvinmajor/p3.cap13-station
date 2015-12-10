@@ -1,8 +1,8 @@
 /**
- * Ce projet porte sur l’élaboration d’une station météo autonome sur un Raspberry Pi modèle B+.
- * Cette station, une fois connectée à internet, permet de mesurer la température ainsi que l’humidité sur une plateforme simple d’utilisation pour le client.
- * Le lancement du programme se réalise sur la Raspberry via une connexion SSH.
- * Une clé PushBullet doit être fournie à son démarrage afin de pouvoir intéragir avec elle par après via le site internet et l'application PushBullet.
+ * Ce projet porte sur l'elaboration d'une station meteo autonome sur un Raspberry Pi modele B+.
+ * Cette station, une fois connectee a� internet, permet de mesurer la temperature ainsi que l'humidite sur une plateforme simple d'utilisation pour le client.
+ * Le lancement du programme se realise sur la Raspberry via une connexion SSH.
+ * Une clé PushBullet doit etre fournie a� son demarrage afin de pouvoir interagir avec elle par apres via le site internet et l'application PushBullet.
  * Pour plus d'information sur PushBullet, veuillez visiter le site internet : http://www.pushbullet.com/
  * 
  * @author : Melvin Campos Casares & Gauthier Fossion & Crispin Mutani & Pablo Wauthelet
